@@ -5,4 +5,4 @@ const transactionSchema = new mongoose.Schema(
 
 );
 
-export default mongoose.model("User", transactionSchema);
+export default mongoose.model("transacton", transactionSchema);

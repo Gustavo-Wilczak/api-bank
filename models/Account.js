@@ -5,4 +5,4 @@ const accountSchema = new mongoose.Schema(
 
 );
 
-export default mongoose.model("User", accountSchema);
+export default mongoose.model("Account", accountSchema);
