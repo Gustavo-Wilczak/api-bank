@@ -12,7 +12,7 @@ const createUser = async (rulesCreateUser) => {
     const userExistsEmail = await User.findOne({ email });
 
     if (userExistsEmail) {
-        const error = new Error("Já existe um usuário com esse email");
+        const error = new Error(" A user with this email already exists.");
         error.statusCode = 400;
         throw error;
     }
@@ -20,11 +20,11 @@ const createUser = async (rulesCreateUser) => {
     const userExistsCPF = await User.findOne({ cpf });
 
     if (userExistsCPF) {
-        const error = new Error("Já existe um usuário com esse CPF");
+        const error = new Error("There is already a user with that CPF.");
         error.statusCode = 400;
         throw error;
     }
-    0
+
     return User.create({ name, email, phoneNumber, cpf, age });
 }
 
@@ -34,15 +34,72 @@ const getAllUsers = async () => {
 
 const getUserById = async (id) => {
     const usersId = await User.findById(id);
-    
+
     if (!usersId) {
-        const error = new Error("Usuário não encontrado");
+        const error = new Error("User not found");
         error.statusCode = 404;
         throw error;
-      }
-    
-      return usersId;
+    }
+    return usersId;
 };
+
+const updateUser = async (id, newRulesCreateUser) => {
+    const { newName, newEmail, newCpf, newPhoneNumber, newAge, } = newRulesCreateUser
+
+    const userExistsEmail = await User.findOne({ newEmail });
+
+    if (userExistsEmail) {
+        const error = new Error(" A user with this email already exists.");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const userExistsCPF = await User.findOne({ newCpf });
+
+    if (userExistsCPF) {
+        const error = new Error("There is already a user with that CPF.");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const userUpdateId = await User.findByIdAndUpdate(id, newRulesCreateUser, {
+        new: true,
+        runValidators: true,
+    });
+
+    if (!userUpdateId) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+    return userUpdateId;
+}
+
+const deleteUsers = async (id) => {
+
+    const userDelete = await User.findByIdAndDelete(id)
+
+    if (!userDelete) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+    return userDelete;
+}
+
+const getUserByCpf = async (cpf) => {
+
+    const userCpf = await User.findOne({ cpf })
+    if (!userCpf) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+
+
+    return userCpf;
+}
+
 
 
 
@@ -51,4 +108,7 @@ export default {
     createUser,
     getAllUsers,
     getUserById,
+    updateUser,
+    deleteUsers,
+    getUserByCpf,
 };
