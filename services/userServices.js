@@ -1,3 +1,4 @@
+import Account from "../models/Account.js";
 import User from "../models/User.js";
 
 const createUser = async (rulesCreateUser) => {
@@ -100,9 +101,16 @@ const getUserByCpf = async (cpf) => {
     return userCpf;
 }
 
+const getUserByEmail = async (email) => {
 
-
-
+    const userEmail = await User.findOne({ email })
+    if (!userEmail) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+    }
+    return userEmail;
+}
 
 export default {
     createUser,
@@ -111,4 +119,5 @@ export default {
     updateUser,
     deleteUsers,
     getUserByCpf,
+    getUserByEmail,
 };

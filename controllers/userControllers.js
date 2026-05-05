@@ -58,7 +58,15 @@ const getUserByCpf = async (req, res, next) => {
     }
 }
 
+const getUserByEmail = async (req, res, next) => {
+    try {
+        const userEmail = await userServices.getUserByEmail(req.params.email)
+        res.json(userEmail)
+    } catch (error) {
+        next(error);
+    }
 
+}
 
 
 export default {
@@ -67,5 +75,6 @@ export default {
     getUserById,
     updateUser,
     deleteUsers,
-    getUserByCpf
+    getUserByCpf,
+    getUserByEmail,
 };
