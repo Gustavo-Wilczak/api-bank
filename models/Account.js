@@ -11,9 +11,9 @@ const accountSchema = new mongoose.Schema({
         type: Number,
         required: true,
         unique: true,
-        default: Math.floor(100000 + Math.random() * 900000),
+        default: () => Math.floor(100000 + Math.random() * 900000),
     },
-    Agency: {
+    agency: {
         type: String,
         required: true,
         default: "001",
@@ -24,16 +24,16 @@ const accountSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
     },
-    Balance: {
+    balance: {
         type: Number,
         default: 0,
     },
-    Limit: {
+    limit: {
         type: Number,
         required: true,
         default: 0
     },
-    Active: {
+    active: {
         type: Boolean,
         required: true,
         default: true,
@@ -53,3 +53,4 @@ const accountSchema = new mongoose.Schema({
     });
 
 export default mongoose.model("Account", accountSchema);
+

@@ -54,10 +54,43 @@ const getAccountById = async (id) => {
         error.statusCode = 404;
         throw error;
     }
+    return accountId;
+}
+
+const getAccountByNumber = async (accountNumber) => {
+
+    const searchNumberAccount = await Account.findOne({ accountNumber })
+
+    if (!searchNumberAccount) {
+        const error = new Error("Account not found");
+        error.statusCode = 404;
+        throw error;
+    }
+    return searchNumberAccount;
+
+}
+
+const checkBalance = async (id) => {
+    const accountId = await Account.findById(id);
+
+    if (!accountId) {
+        const error = new Error("Account not found");
+        error.statusCode = 404;
+        throw error;
+    }
+    const { balance, limit } = accountId
+
+    const accountBalance = { balance, limit, availableBalance: balance + limit }
+
+
+    return accountBalance;
 }
 
 
 export default {
     createAccount,
     getAllAccount,
+    getAccountById,
+    getAccountByNumber,
+    checkBalance,
 };

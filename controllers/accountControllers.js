@@ -19,8 +19,35 @@ const getAllAccount = async (req, res, next) => {
     }
 }
 
+const getAccountById = async (req, res, next) => {
+    try {
+        const accountById = await accountService.getAccountById(req.params.id);
+        res.json(accountById)
+    } catch (error) {
+        next(error);
+    }
 
+}
+
+const getAccountByNumber = async (req, res, next) => {
+    try {
+        const searchNumberAccount = await accountService.getAccountByNumber(req.params.accountNumber);
+        res.json(searchNumberAccount)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const checkBalance = async (req, res, next) => {
+    try {
+        const balanceById = await accountService.checkBalance(req.params.id)
+        res.json(balanceById)
+    } catch (error) { next(error) }
+}
 export default {
     createAccount,
     getAllAccount,
+    getAccountById,
+    getAccountByNumber,
+    checkBalance,
 };
