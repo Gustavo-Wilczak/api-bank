@@ -79,7 +79,7 @@ const transfeMoney = async (req, res, next) => {
 
 const checkStatement = async (req, res, next) => {
   try {
-    const statement = await accountService.checkStatement(req.params.id);
+    const statement = await accountService.checkStatement(req.params.accountId);
     res.json(statement);
   } catch (error) {
     next(error);
