@@ -90,7 +90,7 @@ const deleteUsers = async (id) => {
 
 const getUserByCpf = async (cpf) => {
 
-    const userCpf = await User.findOne({ cpf })
+    const userCpf = await User.find({ cpf })
     if (!userCpf) {
         const error = new Error("User not found");
         error.statusCode = 404;
@@ -103,7 +103,7 @@ const getUserByCpf = async (cpf) => {
 
 const getUserByEmail = async (email) => {
 
-    const userEmail = await User.findOne({ email })
+    const userEmail = await User.find({ email })
     if (!userEmail) {
         const error = new Error("User not found");
         error.statusCode = 404;

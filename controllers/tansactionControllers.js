@@ -27,8 +27,30 @@ const getTransactionType = async (req, res, next) => {
   }
 };
 
+const transactionsByValueRange = async (req, res, next) => {
+  try {
+    const transactionValue = await transactionService.transactionsByValueRange(req.params.min, req.params.max)
+    res.json(transactionValue)
+  } catch (error) {
+    next(error);
+  }
+
+};
+
+const getTransactionByYear = async(req,res,next)=> {
+try{
+const transactionYear = await transactionService.getTransactionByYear(req.params.year);
+res.json(transactionYear)
+} catch (error) {
+  next(error);
+}
+
+}
+
 export default {
   getAllTransaction,
   getTransactionById,
-  getTransactionType
+  getTransactionType,
+  transactionsByValueRange,
+  getTransactionByYear
 };

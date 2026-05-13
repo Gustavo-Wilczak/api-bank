@@ -65,7 +65,7 @@ const getAccountById = async (id) => {
 };
 
 const getAccountByNumber = async (accountNumber) => {
-    const searchNumberAccount = await Account.findOne({ accountNumber });
+    const searchNumberAccount = await Account.find({ accountNumber });
 
     if (!searchNumberAccount) {
         const error = new Error("Account not found");
