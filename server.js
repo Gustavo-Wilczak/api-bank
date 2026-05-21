@@ -23,6 +23,7 @@ app.use("/users", userRoutes);
 app.use("/accounts", accountRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/admin", adminRoutes);
+app.use("/auth" , authRoutes);
 
 
 const startServer = async () => {

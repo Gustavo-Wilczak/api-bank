@@ -1,8 +1,8 @@
 import Account from "../models/Account.js";
 import User from "../models/User.js";
 
-const createUser = async (rulesCreateUser) => {
-    const { name, email, cpf, phoneNumber, age, } = rulesCreateUser
+const createUser = async (data) => {
+    const { name, email, cpf, phoneNumber, age, } = data
 
     if (!name || !email || !cpf || !phoneNumber || !age === undefined) {
         const error = new Error("Name, email, phone number, CPF, and age are required.");
@@ -44,8 +44,8 @@ const getUserById = async (id) => {
     return usersId;
 };
 
-const updateUser = async (id, newRulesCreateUser) => {
-    const { newName, newEmail, newCpf, newPhoneNumber, newAge, } = newRulesCreateUser
+const updateUser = async (id, data) => {
+    const { newName, newEmail, newCpf, newPhoneNumber, newAge, } = data
 
     const userExistsEmail = await User.findOne({ newEmail });
 
@@ -63,7 +63,7 @@ const updateUser = async (id, newRulesCreateUser) => {
         throw error;
     }
 
-    const userUpdateId = await User.findByIdAndUpdate(id, newRulesCreateUser, {
+    const userUpdateId = await User.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true,
     });

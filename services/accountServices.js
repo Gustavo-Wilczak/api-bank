@@ -2,8 +2,8 @@ import Account from "../models/Account.js";
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 
-const createAccount = async (rulesCreateCont) => {
-    const { userId, type, limit } = rulesCreateCont;
+const createAccount = async (data) => {
+    const { userId, type, limit } = data;
 
     if (!userId || !type || limit === undefined) {
         const error = new Error("userId, type, and limit are required.");
@@ -348,7 +348,6 @@ const checkStatement = async (id) => {
 
   return accountStatement;
 };
-
 
 const simulteWithdrawMoney = async (ruleWithdraw, id) => {
     const withdrawId = await Account.findById(id);

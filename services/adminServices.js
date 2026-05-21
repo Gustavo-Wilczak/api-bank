@@ -2,21 +2,21 @@ import Transaction from "../models/Transaction.js";
 import Account from "../models/Account.js";
 import User from "../models/User.js";
 
-const getUserActives = async (active) => {
+const getUserActives = async () => {
 
     const usersActive = await User.find({ active: true })
 
     return usersActive
 };
-const getUserInactives = async (active) => {
+const getUserInactives = async () => {
 
     const usersInactive = await User.find({ active: false })
 
     return usersInactive
 };
 
-const updateUserActive = async (id, active) => {
-    const userActive = await User.findById(id);
+const activateUser = async (id) => {
+    let userActive = await User.findById(id);
 
     if (!userActive) {
         const error = new Error("User not found");
@@ -28,15 +28,19 @@ const updateUserActive = async (id, active) => {
         error.statusCode = 400;
         throw error;
     }
-    userActive.active = active;
+  
+     userActive = await User.findByIdAndUpdate(
+        id,
+        { active: true }
+    )
 
-    await userActive.save();
-
-    return userActive;
+    return{
+        message: "User successfully activated "
+    };
 };
 
-const updateUserInactve = async (id, active) => {
-    const userInactive = await User.findByIdAndUpdate(id);
+const deactivateUser = async (id) => {
+    const userInactive = await User.findById(id);
 
     if (!userInactive) {
         const error = new Error("User not found");
@@ -44,7 +48,7 @@ const updateUserInactve = async (id, active) => {
         throw error;
     }
     if (userInactive.active === false) {
-        const error = new Error("User is already active");
+        const error = new Error("User is already inactive");
         error.statusCode = 400;
         throw error;
     }
@@ -55,18 +59,34 @@ const updateUserInactve = async (id, active) => {
         throw error;
     }
 
-    userInactive.active = active;
+    userInactive = await User.findByIdAndUpdate(
+        id,
+        { active: false }
+    )
 
-    await userInactive.save();
-//ver depois
-    return userInactive;
+    return{
+        message: "User successfully deactivated"
+    };
 };
 
+const getAccountActives = async ()=>{
+    const accountActive = await Account.find({ active: true });
+
+    return accountActive;
+};
+const getAccountInactives = async ()=>{
+    const accountInactive = await Account.find({ active: false });
+
+    return  accountInactive
+    ;
+};
 
 
 export default {
     getUserActives,
     getUserInactives,
-    updateUserActive,
-    updateUserInactve,
+    activateUser,
+    deactivateUser,
+    getAccountActives,
+    getAccountInactives,
 };

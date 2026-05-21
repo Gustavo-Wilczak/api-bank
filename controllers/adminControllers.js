@@ -18,28 +18,48 @@ const getUserInactives = async (req, res, next) => {
     }
 };
 
-const updateUserActive = async (req, res, next) => {
+const activateUser = async (req, res, next) => {
     try {
-        const updateActive = await adminServices.updateUserActive(req.params.id);
+        const updateActive = await adminServices.activateUser(req.params.id);
         res.json(updateActive)
     } catch (error) {
         next(error)
     }
 };
 
-const updateUserInactve = async (req, res, next) => {
+const deactivateUser= async (req, res, next) => {
     try {
-        const updateInactive = await adminServices.updateUserInactve(req.params.id);
+        const updateInactive = await adminServices.deactivateUser(req.params.id);
         res.json(updateInactive)
     } catch (error) {
         next(error)
     }
 };
 
+const getAccountActives = async (req,res,next)=> {
+    try {
+        const accountActive = await adminServices.getAccountActives()
+        res.json(accountActive)
+    } catch (error) {
+        next(error)
+    }
+};
+const getAccountInactives = async(req,res,next)=>{
+    try {
+        const accountInactive = await adminServices.getAccountInactives()
+        res.json(accountInactive)
+    } catch (error) {
+        next(error)
+    }
+};
+
+
 
 export default {
     getUserActives,
     getUserInactives,
-    updateUserActive,
-    updateUserInactve,
+    activateUser,
+    deactivateUser,
+    getAccountActives,
+    getAccountInactives,
 };
