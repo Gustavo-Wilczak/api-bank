@@ -11,8 +11,10 @@ const getAllTransaction = async (req, res, next) => {
 
 const getTransactionById = async (req, res, next) => {
   try {
-    const transactionId = await transactionService.getTransactionById(req.params.id);
-    res.json(transactionId)
+    const transactionId = await transactionService.getTransactionById(
+      req.params.id,
+    );
+    res.json(transactionId);
   } catch (error) {
     next(error);
   }
@@ -20,7 +22,9 @@ const getTransactionById = async (req, res, next) => {
 
 const getTransactionType = async (req, res, next) => {
   try {
-    const transactionType = await transactionService.getTransactionType(req.params.type);
+    const transactionType = await transactionService.getTransactionType(
+      req.params.type,
+    );
     res.json(transactionType);
   } catch (error) {
     next(error);
@@ -29,28 +33,41 @@ const getTransactionType = async (req, res, next) => {
 
 const transactionsByValueRange = async (req, res, next) => {
   try {
-    const transactionValue = await transactionService.transactionsByValueRange(req.params.min, req.params.max)
-    res.json(transactionValue)
+    const transactionValue = await transactionService.transactionsByValueRange(
+      req.params.min,
+      req.params.max,
+    );
+    res.json(transactionValue);
   } catch (error) {
     next(error);
   }
-
 };
 
-const getTransactionByYear = async(req,res,next)=> {
-try{
-const transactionYear = await transactionService.getTransactionByYear(req.params.year);
-res.json(transactionYear)
-} catch (error) {
-  next(error);
-}
+const getTransactionByYear = async (req, res, next) => {
+  try {
+    const transactionYear = await transactionService.getTransactionByYear(
+      req.params.year,
+    );
+    res.json(transactionYear);
+  } catch (error) {
+    next(error);
+  }
+};
 
-}
+const getMeTransactions = async (req, res, next) => {
+  try {
+    const transaction = await transactionService.getMeTransactions(req.user._id,);
+    res.json(transaction);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export default {
   getAllTransaction,
   getTransactionById,
   getTransactionType,
   transactionsByValueRange,
-  getTransactionByYear
+  getTransactionByYear,
+  getMeTransactions,
 };

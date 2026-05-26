@@ -4,7 +4,6 @@ import User from "../models/User.js";
 
 const getAllTransaction = async () => {
   return Transaction.find();
-
 };
 
 const getTransactionById = async (id) => {
@@ -19,7 +18,6 @@ const getTransactionById = async (id) => {
 };
 
 const getTransactionType = async (type) => {
-
   const transactionType = await Transaction.findOne({ type: type });
 
   if (!transactionType) {
@@ -31,7 +29,6 @@ const getTransactionType = async (type) => {
 };
 
 const transactionsByValueRange = async (min, max) => {
-
   min: Number(min);
   max: Number(max);
 
@@ -44,34 +41,44 @@ const transactionsByValueRange = async (min, max) => {
   const transaction = await Transaction.find({
     value: {
       $gte: min,
-      $lte: max
-    }
-  })
+      $lte: max,
+    },
+  });
 
   if (!transaction) {
     const error = new Error("Account not found");
     error.statusCode = 404;
     throw error;
-  };
+  }
 
   return transaction;
-}
+};
 
 const getTransactionByYear = async (year) => {
-
   const start = new Date(`${year}-01-01`);
   const end = new Date(`${Number(year) + 1}-01-01`);
 
   const transactions = await Transaction.find({
     createdAt: {
       $gte: start,
-      $lt: end
-    }
+      $lt: end,
+    },
   });
 
   return transactions;
 };
 
+const getMeTransactions = async (id) => {
+  const transactions = await Transaction.findOne({ userId: id });
+
+  if (!transactions) {
+    const error = new Error("Transactions not found");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return transactions;
+};
 
 export default {
   getAllTransaction,
@@ -79,5 +86,5 @@ export default {
   getTransactionType,
   transactionsByValueRange,
   getTransactionByYear,
+  getMeTransactions,
 };
-
