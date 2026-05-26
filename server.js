@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
 import { setServers } from "node:dns/promises";
 setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -23,6 +24,7 @@ app.use("/users", userRoutes);
 app.use("/accounts", accountRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/admin", adminRoutes);
+app.use("/auth" , authRoutes);
 
 
 const startServer = async () => {

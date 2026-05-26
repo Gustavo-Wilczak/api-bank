@@ -14,6 +14,11 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
     },
+    password: {
+        type: String,
+        required: true,
+        select: false
+    },
     cpf: {
         type: String,
         required: true,
@@ -34,6 +39,13 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
+    },
+
+
 },
     {
         collection: "users",

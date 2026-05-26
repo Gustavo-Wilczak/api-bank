@@ -1,15 +1,20 @@
 import express from "express";
 import userControllers from "../controllers/userControllers.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import adminMiddleware from "../middlewares/adminMiddleware.js";
+
+
 
 const router = express.Router();
 
-router.post("/", userControllers.createUser);
-router.get("/", userControllers.getAllUsers);
-router.get("/:id", userControllers.getUserById);
-router.put("/:id", userControllers.updateUser);
-router.delete("/:id", userControllers.deleteUsers);
-router.get("/cpf/:cpf", userControllers.getUserByCpf);
-router.get("/email/:email", userControllers.getUserByEmail)
+router.get("/me", authMiddleware, userControllers.getMe);
+router.put("/me", authMiddleware, userControllers.updateMe);
+router.get("/", authMiddleware, adminMiddleware, userControllers.getAllUsers);
+router.get("/:id", authMiddleware, adminMiddleware, userControllers.getUserById);
+router.put("/:id", authMiddleware, adminMiddleware, userControllers.updateUser);
+router.delete("/:id", authMiddleware, adminMiddleware, userControllers.deleteUsers);
+router.get("/cpf/:cpf", authMiddleware, adminMiddleware, userControllers.getUserByCpf);
+router.get("/email/:email", authMiddleware, adminMiddleware, userControllers.getUserByEmail)
 
 
 

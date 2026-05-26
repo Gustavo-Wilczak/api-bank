@@ -1,33 +1,6 @@
 import Account from "../models/Account.js";
 import User from "../models/User.js";
 
-const createUser = async (rulesCreateUser) => {
-    const { name, email, cpf, phoneNumber, age, } = rulesCreateUser
-
-    if (!name || !email || !cpf || !phoneNumber || !age === undefined) {
-        const error = new Error("Name, email, phone number, CPF, and age are required.");
-        error.statusCode = 400;
-        throw error;
-    }
-
-    const userExistsEmail = await User.findOne({ email });
-
-    if (userExistsEmail) {
-        const error = new Error(" A user with this email already exists.");
-        error.statusCode = 400;
-        throw error;
-    }
-
-    const userExistsCPF = await User.findOne({ cpf });
-
-    if (userExistsCPF) {
-        const error = new Error("There is already a user with that CPF.");
-        error.statusCode = 400;
-        throw error;
-    }
-
-    return User.create({ name, email, phoneNumber, cpf, age });
-}
 
 const getAllUsers = async () => {
     return User.find();
@@ -44,8 +17,8 @@ const getUserById = async (id) => {
     return usersId;
 };
 
-const updateUser = async (id, newRulesCreateUser) => {
-    const { newName, newEmail, newCpf, newPhoneNumber, newAge, } = newRulesCreateUser
+const updateUser = async (id, data) => {
+    const { newName, newEmail, newCpf, newPhoneNumber, newAge, } = data
 
     const userExistsEmail = await User.findOne({ newEmail });
 
@@ -63,7 +36,7 @@ const updateUser = async (id, newRulesCreateUser) => {
         throw error;
     }
 
-    const userUpdateId = await User.findByIdAndUpdate(id, newRulesCreateUser, {
+    const userUpdateId = await User.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true,
     });
@@ -112,12 +85,41 @@ const getUserByEmail = async (email) => {
     return userEmail;
 }
 
+const updateMe = async (userId, data) => {
+    delete data.role;
+    delete data.active;
+
+    if(data.email) {
+        const emailExists = await User.findOne({
+            email: data.email,
+            _id: { $ne: userId}
+        })
+
+        if (emailExists) {
+            throw new Error("A user with this email already exists.")
+        }
+    }
+
+    const user = await User.findByIdAndUpdate(userId, data, {
+        new: true,
+        runValidators: true
+    })
+
+    if (!user) {
+        throw new Error("User not found")
+    }
+
+    return user;
+}
+
+
+
 export default {
-    createUser,
     getAllUsers,
     getUserById,
     updateUser,
     deleteUsers,
     getUserByCpf,
     getUserByEmail,
+    updateMe
 };
