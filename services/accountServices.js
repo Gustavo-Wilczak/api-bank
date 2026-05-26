@@ -497,6 +497,12 @@ const simulteTransfeMoney = async (rulesTransfer) => {
     return messageTranfer;
 };
 
+const getMeAccount= async (id)=> {
+
+    
+}
+
+
 export default {
     createAccount,
     getAllAccount,

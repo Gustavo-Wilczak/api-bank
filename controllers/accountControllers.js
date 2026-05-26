@@ -1,5 +1,14 @@
 import accountService from "../services/accountServices.js";
 
+const getMeAccount = async (req, res, next) => {
+  try {
+    const getAccount = await accountService.getMeAccount(req.user._id);
+    res.json(getAccount);
+  } catch (error) {
+    next(error)
+  }
+};
+
 const createAccount = async (req, res, next) => {
   try {
     const account = await accountService.createAccount(req.body);
@@ -100,7 +109,7 @@ const simulteWithdrawMoney = async (req, res, next) => {
 
 const simulteTransfeMoney = async (req, res, next) => {
   try {
-    const simulteTransfer = await accountService.simulteTransfeMoney(req.body , req.params.id);
+    const simulteTransfer = await accountService.simulteTransfeMoney(req.body, req.params.id);
     res.json(simulteTransfer);
   } catch (error) {
     next(error);
@@ -119,4 +128,5 @@ export default {
   checkStatement,
   simulteWithdrawMoney,
   simulteTransfeMoney,
+  getMeAccount,
 };

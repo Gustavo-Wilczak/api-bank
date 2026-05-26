@@ -1,12 +1,27 @@
 
 import userServices from "../services/userServices.js";
 
-const createUser = async (req, res, next) => {
+const getMe = async (req, res, next) => {
     try {
-        const user = await userServices.createUser(req.body);
-        res.status(201).json(user)
+        res.status(200).json({
+            message: "Logged in user found",
+            data: req.user,
+        })
     } catch (error) {
         next(error);
+    }
+};
+
+const updateMe = async (req, res, next) => {
+    try {
+        const user = await userServices.updateMe(req.user._id, req.body)
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            data: user,
+        })
+    } catch (error) {
+        next(error)
     }
 }
 
@@ -17,7 +32,7 @@ const getAllUsers = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 const getUserById = async (req, res, next) => {
     try {
@@ -27,7 +42,7 @@ const getUserById = async (req, res, next) => {
         next(error);
 
     }
-}
+};
 
 const updateUser = async (req, res, next) => {
     try {
@@ -38,7 +53,7 @@ const updateUser = async (req, res, next) => {
 
     }
 
-}
+};
 
 const deleteUsers = async (req, res, next) => {
     try {
@@ -47,7 +62,7 @@ const deleteUsers = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 const getUserByCpf = async (req, res, next) => {
     try {
@@ -56,7 +71,7 @@ const getUserByCpf = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 const getUserByEmail = async (req, res, next) => {
     try {
@@ -66,18 +81,17 @@ const getUserByEmail = async (req, res, next) => {
         next(error);
     }
 
-}
-
-
+};
 
 
 
 export default {
-    createUser,
     getAllUsers,
     getUserById,
     updateUser,
     deleteUsers,
     getUserByCpf,
     getUserByEmail,
+    getMe,
+    updateMe
 };

@@ -9,6 +9,7 @@ const getUserActives = async (req, res, next) => {
         next(error)
     }
 };
+
 const getUserInactives = async (req, res, next) => {
     try {
         const userInactive = await adminServices.getUserInactives()
@@ -44,6 +45,7 @@ const getAccountActives = async (req,res,next)=> {
         next(error)
     }
 };
+
 const getAccountInactives = async(req,res,next)=>{
     try {
         const accountInactive = await adminServices.getAccountInactives()
@@ -53,6 +55,95 @@ const getAccountInactives = async(req,res,next)=>{
     }
 };
 
+const blockAccount = async (req, res, next) => {
+    try {
+        const blockedAccount = await adminServices.blockAccount( req.params.id );
+        res.json(blockedAccount);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const unblockAccount = async (req, res, next) => {
+    try {
+        const unblockedAccount = await adminServices.unblockAccount( req.params.id );
+        res.json(unblockedAccount);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const closeAccount = async (req, res, next) => {
+    try {
+        const closedAccount = await adminServices.closeAccount( req.params.id );
+        res.json(closedAccount);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const openAccount = async (req, res, next) => {
+    try {
+        const openAccount = await adminServices.openAccount( req.params.id );
+        res.json(openAccount);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const monthlyFeeAccount = async (req, res, next) => {
+    try {
+        const accountFee = await adminServices.monthlyFeeAccount( req.params.id, req.body );
+        res.json(accountFee);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getAccountsNegative = async (req, res, next) => {
+    try {
+         const negativeAccounts = await adminServices.getAccountsNegative();
+         res.json(negativeAccounts);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getBiggestBalances = async (req, res, next) => {
+    try {
+        const balances = await adminServices.getBiggestBalances( req.params.limit );
+        res.json(balances)
+    } catch (error) {
+        next(error);
+    }
+};
+
+const refundTransaction = async (req, res, next) => {
+    try {
+        const refundedTransaction = await adminServices.refundTransaction( req.params.id );
+        res.json(refundedTransaction);
+        } catch (error) {
+        next(error);
+    }
+};
+
+const generalReport = async (req, res, next) => {
+    try {
+        const report = await adminServices.generalReport();
+        res.json(report);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const financialReport = async (req, res, next) => {
+    try {
+        const report = await adminServices.financialReport();
+        res.json(report);
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 export default {
@@ -62,4 +153,14 @@ export default {
     deactivateUser,
     getAccountActives,
     getAccountInactives,
+    blockAccount,
+    unblockAccount,
+    closeAccount,
+    openAccount,
+    monthlyFeeAccount,
+    getAccountsNegative,
+    getBiggestBalances,
+    refundTransaction,
+    generalReport,
+    financialReport
 };
