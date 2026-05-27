@@ -21,7 +21,7 @@ const getUserInactives = async (req, res, next) => {
 
 const activateUser = async (req, res, next) => {
     try {
-        const updateActive = await adminServices.activateUser(req.params.id);
+        const updateActive = await adminServices.activateUser(req.user._id);
         res.json(updateActive)
     } catch (error) {
         next(error)
@@ -30,7 +30,7 @@ const activateUser = async (req, res, next) => {
 
 const deactivateUser= async (req, res, next) => {
     try {
-        const updateInactive = await adminServices.deactivateUser(req.params.id);
+        const updateInactive = await adminServices.deactivateUser(req.user._id);
         res.json(updateInactive)
     } catch (error) {
         next(error)
@@ -57,7 +57,7 @@ const getAccountInactives = async(req,res,next)=>{
 
 const blockAccount = async (req, res, next) => {
     try {
-        const blockedAccount = await adminServices.blockAccount( req.params.id );
+        const blockedAccount = await adminServices.blockAccount(req.user._id);
         res.json(blockedAccount);
     } catch (error) {
         next(error);
@@ -66,7 +66,7 @@ const blockAccount = async (req, res, next) => {
 
 const unblockAccount = async (req, res, next) => {
     try {
-        const unblockedAccount = await adminServices.unblockAccount( req.params.id );
+        const unblockedAccount = await adminServices.unblockAccount(req.user._id);
         res.json(unblockedAccount);
     } catch (error) {
         next(error);
@@ -75,7 +75,7 @@ const unblockAccount = async (req, res, next) => {
 
 const closeAccount = async (req, res, next) => {
     try {
-        const closedAccount = await adminServices.closeAccount( req.params.id );
+        const closedAccount = await adminServices.closeAccount(req.user._id);
         res.json(closedAccount);
     } catch (error) {
         next(error);
@@ -84,7 +84,7 @@ const closeAccount = async (req, res, next) => {
 
 const openAccount = async (req, res, next) => {
     try {
-        const openAccount = await adminServices.openAccount( req.params.id );
+        const openAccount = await adminServices.openAccount(req.user._id);
         res.json(openAccount);
     } catch (error) {
         next(error);
@@ -93,7 +93,7 @@ const openAccount = async (req, res, next) => {
 
 const monthlyFeeAccount = async (req, res, next) => {
     try {
-        const accountFee = await adminServices.monthlyFeeAccount( req.params.id, req.body );
+        const accountFee = await adminServices.monthlyFeeAccount( req.user._id, req.body );
         res.json(accountFee);
     } catch (error) {
         next(error);
@@ -111,7 +111,7 @@ const getAccountsNegative = async (req, res, next) => {
 
 const getBiggestBalances = async (req, res, next) => {
     try {
-        const balances = await adminServices.getBiggestBalances( req.params.limit );
+        const balances = await adminServices.getBiggestBalances(req.params.limit);
         res.json(balances)
     } catch (error) {
         next(error);
@@ -120,7 +120,7 @@ const getBiggestBalances = async (req, res, next) => {
 
 const refundTransaction = async (req, res, next) => {
     try {
-        const refundedTransaction = await adminServices.refundTransaction( req.params.id );
+        const refundedTransaction = await adminServices.refundTransaction(req.user._id);
         res.json(refundedTransaction);
         } catch (error) {
         next(error);

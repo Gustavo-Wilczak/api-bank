@@ -6,7 +6,7 @@ const register = async (data) => {
     const { name, email, cpf, password, phoneNumber, role, age, active } = data;
 
     if (!name || !email || !cpf || !password || !phoneNumber || !age) {
-        throw new Error("Name, email, CPF, password, phone number, and age are required.");
+        throw new Error("name, email, cpf, password, phone number, and age are required.");
     }
 
     const userExists = await User.findOne({ email });

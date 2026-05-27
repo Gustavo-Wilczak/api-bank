@@ -11,9 +11,7 @@ const getAllTransaction = async (req, res, next) => {
 
 const getTransactionById = async (req, res, next) => {
   try {
-    const transactionId = await transactionService.getTransactionById(
-      req.params.id,
-    );
+    const transactionId = await transactionService.getTransactionById(req.user._id);
     res.json(transactionId);
   } catch (error) {
     next(error);
@@ -22,9 +20,7 @@ const getTransactionById = async (req, res, next) => {
 
 const getTransactionType = async (req, res, next) => {
   try {
-    const transactionType = await transactionService.getTransactionType(
-      req.params.type,
-    );
+    const transactionType = await transactionService.getTransactionType(req.params.type);
     res.json(transactionType);
   } catch (error) {
     next(error);
@@ -56,7 +52,7 @@ const getTransactionByYear = async (req, res, next) => {
 
 const getMeTransactions = async (req, res, next) => {
   try {
-    const transaction = await transactionService.getMeTransactions(req.user._id,);
+    const transaction = await transactionService.getMeTransactions(req.user._id);
     res.json(transaction);
   } catch (error) {
     next(error);

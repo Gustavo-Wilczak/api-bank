@@ -23,7 +23,7 @@ const updateMe = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-}
+};
 
 const getAllUsers = async (req, res, next) => {
     try {
@@ -36,7 +36,7 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserById = async (req, res, next) => {
     try {
-        const usersId = await userServices.getUserById(req.params.id);
+        const usersId = await userServices.getUserById(req.user._id);
         res.json(usersId)
     } catch (error) {
         next(error);
@@ -46,7 +46,7 @@ const getUserById = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
     try {
-        const userUpdateId = await userServices.updateUser(req.params.id, req.body);
+        const userUpdateId = await userServices.updateUser(req.user._id, req.body);
         res.json(userUpdateId)
     } catch (error) {
         next(error);
@@ -57,7 +57,7 @@ const updateUser = async (req, res, next) => {
 
 const deleteUsers = async (req, res, next) => {
     try {
-        const userDelete = await userServices.deleteUsers(req.params.id);
+        const userDelete = await userServices.deleteUsers(req.user._id);
         res.json(userDelete)
     } catch (error) {
         next(error);
@@ -82,7 +82,6 @@ const getUserByEmail = async (req, res, next) => {
     }
 
 };
-
 
 
 export default {

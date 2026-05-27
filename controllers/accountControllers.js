@@ -29,7 +29,7 @@ const getAllAccount = async (req, res, next) => {
 
 const getAccountById = async (req, res, next) => {
   try {
-    const accountById = await accountService.getAccountById(req.params.id);
+    const accountById = await accountService.getAccountById(req.user._id);
     res.json(accountById);
   } catch (error) {
     next(error);
@@ -49,7 +49,7 @@ const getAccountByNumber = async (req, res, next) => {
 
 const checkBalance = async (req, res, next) => {
   try {
-    const balanceById = await accountService.checkBalance(req.params.id);
+    const balanceById = await accountService.checkBalance(req.user._id);
     res.json(balanceById);
   } catch (error) {
     next(error);
@@ -58,7 +58,7 @@ const checkBalance = async (req, res, next) => {
 
 const depositMoney = async (req, res, next) => {
   try {
-    const deposit = await accountService.depositMoney(req.body, req.params.id);
+    const deposit = await accountService.depositMoney(req.body, req.user._id);
     res.json(deposit);
   } catch (error) {
     next(error);
@@ -69,7 +69,7 @@ const withdrawMoney = async (req, res, next) => {
   try {
     const withdraw = await accountService.withdrawMoney(
       req.body,
-      req.params.id,
+      req.user._id,
     );
     res.json(withdraw);
   } catch (error) {
@@ -88,7 +88,7 @@ const transfeMoney = async (req, res, next) => {
 
 const checkStatement = async (req, res, next) => {
   try {
-    const statement = await accountService.checkStatement(req.params.accountId);
+    const statement = await accountService.checkStatement(req.user._id);
     res.json(statement);
   } catch (error) {
     next(error);
@@ -99,7 +99,7 @@ const simulteWithdrawMoney = async (req, res, next) => {
   try {
     const simulteWithdraw = await accountService.simulteWithdrawMoney(
       req.body,
-      req.params.id,
+      req.user._id,
     );
     res.json(simulteWithdraw);
   } catch (error) {
@@ -109,7 +109,7 @@ const simulteWithdrawMoney = async (req, res, next) => {
 
 const simulteTransfeMoney = async (req, res, next) => {
   try {
-    const simulteTransfer = await accountService.simulteTransfeMoney(req.body, req.params.id);
+    const simulteTransfer = await accountService.simulteTransfeMoney(req.body, req.user._id);
     res.json(simulteTransfer);
   } catch (error) {
     next(error);
