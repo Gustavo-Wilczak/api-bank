@@ -1,3 +1,4 @@
+import accountServices from "../services/accountServices.js";
 import accountService from "../services/accountServices.js";
 
 const getMeAccount = async (req, res, next) => {
@@ -44,6 +45,15 @@ const getAccountByNumber = async (req, res, next) => {
     res.json(searchNumberAccount);
   } catch (error) {
     next(error);
+  }
+};
+
+const checkMeBalance = async (req, res, next) => {
+  try {
+    const meBalance = await accountServices.checkMeBalance(req.user._id);
+    res.json(meBalance)
+  } catch (error) {
+    next(error)
   }
 };
 
@@ -121,6 +131,7 @@ export default {
   getAllAccount,
   getAccountById,
   getAccountByNumber,
+  checkMeBalance,
   checkBalance,
   depositMoney,
   withdrawMoney,

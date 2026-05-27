@@ -10,7 +10,8 @@ router.get("/meAccount", authMiddleware, accountControllers.getMeAccount);
 router.get("/", authMiddleware, adminMiddleware, accountControllers.getAllAccount);
 router.get("/:id", authMiddleware, adminMiddleware, accountControllers.getAccountById);
 router.get("/number/:accountNumber", authMiddleware, adminMiddleware, accountControllers.getAccountByNumber);
-router.get("/balance", authMiddleware, accountControllers.checkBalance);
+router.post("/balance/me" , authMiddleware, accountControllers.checkMeBalance)
+router.get("/balance", authMiddleware, adminMiddleware, accountControllers.checkBalance);
 router.post("/deposit", authMiddleware, accountControllers.depositMoney);
 router.post("/withdraw", authMiddleware, accountControllers.withdrawMoney);
 router.post("/transfer", authMiddleware, accountControllers.transfeMoney);
