@@ -509,6 +509,25 @@ const getMeAccount = async (id) => {
   return getAccount;
 };
 
+const checkMeBalance = async(id)=> {
+
+const meBalance = await Account.findOne({userId: id});
+
+  if (!meBalance) {
+    const error = new Error("Account not found");
+    error.statusCode = 404;
+    throw error;
+  };
+  const { balance, limit } = meBalance;
+
+  const accountBalance = { balance, limit, availableBalance: balance + limit };
+
+  return accountBalance;
+
+};
+
+
+
 export default {
   createAccount,
   getAllAccount,
@@ -522,4 +541,5 @@ export default {
   simulteWithdrawMoney,
   simulteTransfeMoney,
   getMeAccount,
+  checkMeBalance
 };
